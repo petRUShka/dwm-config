@@ -11,7 +11,19 @@ url="http://dwm.suckless.org"
 arch=('i686' 'x86_64')
 license=('MIT')
 options=(zipman)
-depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
+depends=(
+  'libx11'
+  'libxinerama'
+  'libxft'
+  'freetype2'
+  'rofi'        # launcher bound to Alt+F2
+  'alacritty'   # terminal bound to Alt+F1
+)
+
+optdepends=(
+  'slock: screen-lock helper for Super+Shift+L (edit lockcmd if you use another locker)'
+  'i3lock: alternative locker—change lockcmd in config.h if you prefer this'
+)
 install=dwm.install
 source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
 	dwm.desktop)
