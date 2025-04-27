@@ -4,7 +4,7 @@
 # Contributor: Grigorios Bouzakis <grbzks@gmail.com>
 
 pkgname=dwm
-pkgver=6.1
+pkgver=6.5
 pkgrel=1
 pkgdesc="A dynamic window manager for X"
 url="http://dwm.suckless.org"
@@ -15,9 +15,9 @@ depends=('libx11' 'libxinerama' 'libxft' 'freetype2')
 install=dwm.install
 source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
 	dwm.desktop)
-md5sums=('f0b6b1093b7207f89c2a90b848c008ec'
+md5sums=('446e84f5b151a1d4483fd72fd647e47e'
          '939f403a71b6e85261d09fc3412269ee')
-_patches=(dwm-6.1-systray.diff)
+_patches=(dwm-systray-20230922-9f88553.diff)
 
 prepare() {
   cd $srcdir/$pkgname-$pkgver
