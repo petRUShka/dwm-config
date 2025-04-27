@@ -25,6 +25,7 @@ It only contains a PKGBUILD that builds vanilla **dwm 6.5** plus:
 git clone https://git.example.com/yourname/dwm-6.5-custom-pkg.git
 cd dwm-6.5-custom-pkg
 makepkg -si          # builds dwm-6.5-custom-*.pkg.tar.zst and installs it
+```
 
 ## Default key-bindings
 
