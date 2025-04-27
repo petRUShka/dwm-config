@@ -25,3 +25,21 @@ It only contains a PKGBUILD that builds vanilla **dwm 6.5** plus:
 git clone https://git.example.com/yourname/dwm-6.5-custom-pkg.git
 cd dwm-6.5-custom-pkg
 makepkg -si          # builds dwm-6.5-custom-*.pkg.tar.zst and installs it
+
+## Default key-bindings
+
+| Keys | Action |
+|------|--------|
+| **Alt&nbsp;+&nbsp;F2** | Launch **rofi** run menu |
+| **Alt&nbsp;+&nbsp;F1** | Launch **alacritty** terminal |
+| **Super&nbsp;+&nbsp;b** | Toggle status bar |
+| **Super&nbsp;+&nbsp;j / k** | Focus next / previous client |
+| **Super&nbsp;+&nbsp;h / l** | Shrink / grow master area |
+| **Super&nbsp;+&nbsp;Return** | Zoom / swap focused client |
+| **Super&nbsp;+&nbsp;c** | Kill focused window |
+| **Super&nbsp;+&nbsp;t** | Tiled layout |
+| **Super&nbsp;+&nbsp;Shift&nbsp;+&nbsp;f** | Floating layout |
+| **Super&nbsp;+&nbsp;f** | Monocle layout |
+| **Super&nbsp;+&nbsp;Shift&nbsp;+&nbsp;L** | Run `lock` (slock / i3lock) |
+| **Super&nbsp;+&nbsp;1 … 9** | View tag *n* |
+| **Super&nbsp;+&nbsp;Shift&nbsp;+&nbsp;1 … 9** | Move window to tag *n* |
