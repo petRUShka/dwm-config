@@ -1,7 +1,7 @@
 # dwm-6.5-custom-pkg  — Arch Linux PKGBUILD
 
 This repo **does not fork dwm’s source**.  
-It only contains a PKGBUILD that builds vanilla **dwm 6.5** plus:
+It only contains a PKGBUILD that builds vanilla **[dwm](http://dwm.suckless.org/) 6.5** plus:
 
 * systray patch (2023-09-22)  
 * 1 px inner gaps  
