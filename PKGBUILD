@@ -1,54 +1,63 @@
-# $Id: PKGBUILD 146423 2015-11-09 10:39:50Z spupykin $
-# Maintainer: Sergej Pupykin <pupykin.s+arch@gmail.com>
-# Contributor: Dag Odenhall <dag.odenhall@gmail.com>
-# Contributor: Grigorios Bouzakis <grbzks@gmail.com>
+# Maintainer: petRUShka <petrushkin@yandex.ru>
 
 pkgname=dwm
 pkgver=6.5
 pkgrel=1
-pkgdesc="A dynamic window manager for X"
-url="http://dwm.suckless.org"
-arch=('i686' 'x86_64')
+pkgdesc="DWM with patches: Dynamic window manager for X (systray+gaps custom build)"
+url="https://github.com/petRUShka/dwm-config"
 license=('MIT')
+arch=('x86_64' 'i686')
 options=(zipman)
+
+# ---- runtime deps ---------------------------------------------------
 depends=(
-  'libx11'
-  'libxinerama'
-  'libxft'
-  'freetype2'
-  'rofi'        # launcher bound to Alt+F2
-  'alacritty'   # terminal bound to Alt+F1
+  libx11 libxinerama libxft freetype2
+  rofi        # launcher (Alt+F2)
+  alacritty   # terminal (Alt+F1)
+)
+optdepends=(
+  'slock: default locker for Super+Shift+L'
+  'i3lock: alternative locker (edit lockcmd in config.h)'
 )
 
-optdepends=(
-  'slock: screen-lock helper for Super+Shift+L (edit lockcmd if you use another locker)'
-  'i3lock: alternative locker—change lockcmd in config.h if you prefer this'
+source=(
+  "dwm-${pkgver}.tar.gz::https://dl.suckless.org/dwm/dwm-${pkgver}.tar.gz"
+  "https://dwm.suckless.org/patches/systray/dwm-systray-20230922-9f88553.diff"
+  "git+https://github.com/petRUShka/dwm-config"
 )
-install=dwm.install
-source=(http://dl.suckless.org/dwm/dwm-$pkgver.tar.gz
-	dwm.desktop)
-md5sums=('446e84f5b151a1d4483fd72fd647e47e'
-         '939f403a71b6e85261d09fc3412269ee')
-_patches=(dwm-systray-20230922-9f88553.diff)
+sha256sums=('21d79ebfa9f2fb93141836c2666cb81f4784c69d64e7f1b2352f9b970ba09729'
+            '29e357bd74f180016898fffaf219637952c777d26f5f2f161d0fbaea741908a1'
+            'SKIP')
+
+_custom_patch="dwm-systray-20230922-9f88553.diff"
+install="dwm.install"   # uses the file inside repo
 
 prepare() {
-  cd $srcdir/$pkgname-$pkgver
-  cp $startdir/config.h config.h
-  make clean
-  for PATCH in "${_patches[@]}"; do
-    msg "${PATCH##*/}" && patch -Np1 -i "${startdir}/${PATCH##*/}"
-  done
+  cd "${srcdir}/dwm-${pkgver}"
+
+  # copy custom config.h
+  cp "${srcdir}/dwm-config/config.h" .
+
+  # apply systray patch
+  patch -Np1 -i "${srcdir}/${_custom_patch}"
 }
 
 build() {
-  cd $srcdir/$pkgname-$pkgver
-  make X11INC=/usr/include/X11 X11LIB=/usr/lib/X11 FREETYPEINC=/usr/include/freetype2
+  cd "${srcdir}/dwm-${pkgver}"
+  make X11INC=/usr/include/X11 \
+       X11LIB=/usr/lib/X11 \
+       FREETYPEINC=/usr/include/freetype2
 }
 
 package() {
-  cd $srcdir/$pkgname-$pkgver
-  make PREFIX=/usr DESTDIR=$pkgdir install
-  install -m644 -D LICENSE $pkgdir/usr/share/licenses/$pkgname/LICENSE
-  install -m644 -D README $pkgdir/usr/share/doc/$pkgname/README
-  install -m644 -D $srcdir/dwm.desktop $pkgdir/usr/share/xsessions/dwm.desktop
+  cd "${srcdir}/dwm-${pkgver}"
+  make PREFIX=/usr DESTDIR="${pkgdir}" install
+
+  # docs & desktop entry from git repo
+  install -Dm644 LICENSE \
+          "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -Dm644 README \
+          "${pkgdir}/usr/share/doc/${pkgname}/README"
+  install -Dm644 "${srcdir}/dwm-config/dwm.desktop" \
+          "${pkgdir}/usr/share/xsessions/dwm.desktop"
 }
